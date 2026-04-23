@@ -1,4 +1,5 @@
 REGION = "us-east-1"
-
 ALB_SG_NAME = "devops-cloud-alb-sg"
 EC2_SG_NAME = "devops-cloud-ec2-sg"
+INSTANCE_TYPE = "t3.micro"
+KEY_NAME = "devops-key10"
