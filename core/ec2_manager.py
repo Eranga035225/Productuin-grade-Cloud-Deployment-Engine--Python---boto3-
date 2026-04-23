@@ -73,14 +73,23 @@ def launch_instance(security_group_id):
     user_data = build_user_data(html)
 
     response = ec2.run_instances(
-        ImageId=ami,
-        InstanceType=INSTANCE_TYPE,
-        MinCount=1,
-        MaxCount=1,
-        KeyName=KEY_NAME,
-        SecurityGroupIds=[security_group_id],
-        UserData=user_data,
-    )
+    ImageId=ami,
+    InstanceType=INSTANCE_TYPE,
+    MinCount=1,
+    MaxCount=1,
+    KeyName=KEY_NAME,
+    SecurityGroupIds=[security_group_id],
+    UserData=user_data,
+
+    TagSpecifications=[
+        {
+            'ResourceType': 'instance',
+            'Tags': [
+                {'Key': 'Project', 'Value': 'CloudDeploymentEngine'}
+            ]
+        }
+    ]
+)
 
     instance_id = response["Instances"][0]["InstanceId"]
 

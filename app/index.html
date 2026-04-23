@@ -1,74 +1,116 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Cloud Deployment Engine</title>
 
     <style>
-        body {
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
             font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #0f172a, #1e293b);
+            background: radial-gradient(circle at top, #0f172a, #020617);
             color: white;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         header {
-            padding: 40px;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
         h1 {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             color: #38bdf8;
+            letter-spacing: 1px;
         }
 
-        p {
-            color: #cbd5f5;
+        header p {
+            margin-top: 10px;
+            color: #94a3b8;
         }
 
         .container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
-            padding: 20px;
+            padding: 40px;
         }
 
         .card {
-            background: #1e293b;
-            padding: 20px;
-            border-radius: 12px;
-            width: 250px;
-            box-shadow: 0 0 10px rgba(56,189,248,0.3);
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(56,189,248,0.2);
         }
 
         .card h3 {
+            margin-bottom: 10px;
             color: #38bdf8;
         }
 
         .status {
             color: #22c55e;
             font-weight: bold;
+            font-size: 1.2rem;
         }
 
-        footer {
-            margin-top: 40px;
-            padding: 20px;
-            font-size: 0.9rem;
-            color: #94a3b8;
+        .badge {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 10px;
+            background: rgba(56,189,248,0.2);
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-bottom: 30px;
         }
 
         button {
-            margin-top: 15px;
-            padding: 10px 15px;
+            padding: 12px 20px;
             border: none;
-            background: #38bdf8;
+            background: linear-gradient(135deg, #38bdf8, #0ea5e9);
             color: black;
-            border-radius: 6px;
+            font-weight: bold;
+            border-radius: 8px;
             cursor: pointer;
+            transition: 0.3s;
         }
 
         button:hover {
-            background: #0ea5e9;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(56,189,248,0.4);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.85rem;
+            color: #64748b;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .glow {
+            text-shadow: 0 0 10px rgba(56,189,248,0.8);
         }
     </style>
 </head>
@@ -76,46 +118,51 @@
 <body>
 
 <header>
-    <h1>🚀 Cloud Deployment Engine</h1>
-    <p>Automated Infrastructure using Python + boto3</p>
+    <h1 class="glow">Cloud Deployment Engine</h1>
+    <p>Automated Infrastructure • Python + boto3 • AWS</p>
 </header>
 
 <div class="container">
 
     <div class="card">
-        <h3>Deployment Status</h3>
-        <p class="status">Running</p>
+        <h3>Deployment</h3>
+        <p class="status">LIVE</p>
+        <div class="badge">Active</div>
     </div>
 
     <div class="card">
-        <h3>Infrastructure</h3>
+        <h3>Architecture</h3>
         <p>EC2 + ALB</p>
+        <div class="badge">Load Balanced</div>
     </div>
 
     <div class="card">
         <h3>Automation</h3>
-        <p>Fully Scripted</p>
+        <p>Fully Automated</p>
+        <div class="badge">boto3 Engine</div>
     </div>
 
     <div class="card">
         <h3>Region</h3>
         <p id="region">Loading...</p>
+        <div class="badge">AWS</div>
     </div>
 
 </div>
 
-<button onclick="showInfo()">Show Info</button>
+<div class="button-container">
+    <button onclick="showInfo()">View Deployment Info</button>
+</div>
 
 <footer>
-    <p>Developed by Eranga | DevOps Project</p>
+    <p>Developed by Eranga • DevOps Engineering Project</p>
 </footer>
 
 <script>
     function showInfo() {
-        alert("🚀 Deployment successful!\nServed via AWS EC2 + ALB");
+        alert("🚀 Deployment Successful!\n\nInfrastructure:\nEC2 + Application Load Balancer\n\nAutomation:\nPython (boto3)");
     }
 
-    // Simulate dynamic info
     document.getElementById("region").innerText = "us-east-1";
 </script>
 

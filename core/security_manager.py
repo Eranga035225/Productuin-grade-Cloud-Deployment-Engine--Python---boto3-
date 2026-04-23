@@ -6,6 +6,9 @@ from core.utils import logger
 ec2 = boto3.client("ec2", region_name=REGION)
 
 
+# -----------------------------
+# Get default VPC
+# -----------------------------
 def get_default_vpc():
     response = ec2.describe_vpcs(
         Filters=[{"Name": "isDefault", "Values": ["true"]}]
@@ -13,6 +16,9 @@ def get_default_vpc():
     return response["Vpcs"][0]["VpcId"]
 
 
+# -----------------------------
+# Get SG by name
+# -----------------------------
 def get_security_group_by_name(name):
     try:
         response = ec2.describe_security_groups(GroupNames=[name])
@@ -21,6 +27,9 @@ def get_security_group_by_name(name):
         return None
 
 
+# -----------------------------
+# Create ALB Security Group
+# -----------------------------
 def create_alb_security_group():
     vpc_id = get_default_vpc()
 
@@ -32,11 +41,20 @@ def create_alb_security_group():
     response = ec2.create_security_group(
         GroupName=ALB_SG_NAME,
         Description="ALB Security Group",
-        VpcId=vpc_id
+        VpcId=vpc_id,
+        TagSpecifications=[
+            {
+                'ResourceType': 'security-group',
+                'Tags': [
+                    {'Key': PROJECT_TAG_KEY, 'Value': PROJECT_TAG_VALUE}
+                ]
+            }
+        ]
     )
 
     sg_id = response["GroupId"]
 
+    # Allow HTTP from anywhere (for ALB)
     ec2.authorize_security_group_ingress(
         GroupId=sg_id,
         IpPermissions=[
@@ -53,6 +71,9 @@ def create_alb_security_group():
     return sg_id
 
 
+# -----------------------------
+# Create EC2 Security Group
+# -----------------------------
 def create_ec2_security_group(my_ip, alb_sg_id):
     vpc_id = get_default_vpc()
 
@@ -64,11 +85,20 @@ def create_ec2_security_group(my_ip, alb_sg_id):
     response = ec2.create_security_group(
         GroupName=EC2_SG_NAME,
         Description="EC2 Security Group",
-        VpcId=vpc_id
+        VpcId=vpc_id,
+        TagSpecifications=[
+            {
+                'ResourceType': 'security-group',
+                'Tags': [
+                    {'Key': PROJECT_TAG_KEY, 'Value': PROJECT_TAG_VALUE}
+                ]
+            }
+        ]
     )
 
     sg_id = response["GroupId"]
 
+    # Rules:
     ec2.authorize_security_group_ingress(
         GroupId=sg_id,
         IpPermissions=[
@@ -79,7 +109,7 @@ def create_ec2_security_group(my_ip, alb_sg_id):
                 "ToPort": 22,
                 "IpRanges": [{"CidrIp": f"{my_ip}/32"}]
             },
-            # HTTP only from ALB
+            # HTTP ONLY from ALB
             {
                 "IpProtocol": "tcp",
                 "FromPort": 80,
