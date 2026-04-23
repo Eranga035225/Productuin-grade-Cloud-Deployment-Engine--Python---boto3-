@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cloud Deployment Engine</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: white;
+            text-align: center;
+        }
+
+        header {
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            color: #38bdf8;
+        }
+
+        p {
+            color: #cbd5f5;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            width: 250px;
+            box-shadow: 0 0 10px rgba(56,189,248,0.3);
+        }
+
+        .card h3 {
+            color: #38bdf8;
+        }
+
+        .status {
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 15px;
+            border: none;
+            background: #38bdf8;
+            color: black;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0ea5e9;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🚀 Cloud Deployment Engine</h1>
+    <p>Automated Infrastructure using Python + boto3</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <h3>Deployment Status</h3>
+        <p class="status">Running</p>
+    </div>
+
+    <div class="card">
+        <h3>Infrastructure</h3>
+        <p>EC2 + ALB</p>
+    </div>
+
+    <div class="card">
+        <h3>Automation</h3>
+        <p>Fully Scripted</p>
+    </div>
+
+    <div class="card">
+        <h3>Region</h3>
+        <p id="region">Loading...</p>
+    </div>
+
+</div>
+
+<button onclick="showInfo()">Show Info</button>
+
+<footer>
+    <p>Developed by Eranga | DevOps Project</p>
+</footer>
+
+<script>
+    function showInfo() {
+        alert("🚀 Deployment successful!\nServed via AWS EC2 + ALB");
+    }
+
+    // Simulate dynamic info
+    document.getElementById("region").innerText = "us-east-1";
+</script>
+
+</body>
+</html>
